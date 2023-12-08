@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Hotel;
 use Illuminate\Database\Seeder;
 
 class HotelSeeder extends Seeder
@@ -14,11 +16,11 @@ class HotelSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Hotel::create([
+            'paket_fluffy'=> 'Paket Fluffy',
+            'harga'=> '15000',
+            'deskripsi'=> 'fasillitas: penginapan + kandang + litterbox + perawata',
+            'gambar'=>''
+        ]);
     }
 }
