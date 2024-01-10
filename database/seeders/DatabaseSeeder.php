@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
        $this->call([
         HotelSeeder:: class,
-        
+        TreatmentSeeder:: class,
        ]);
     }
 }

@@ -1,6 +1,14 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\TestimoniController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\HotelController;
+use App\Models\Invoice;
+use App\Models\Treatment;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +22,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->group(function () {
+    Route::resource('order', OrderController::class);
+    Route::resource('booking', BookingController::class);
+    Route::resource('invoice', InvoiceController::class);
+    Route::resource('testimoni', TestimoniController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('Hotel', HotelController::class);
+    Route::resource('Treatment', Treatment::class);
+    Route::post('book', [PaymentController::class, 'book']);
+    Route::post('generateqr', [PaymentController::class, 'generateqr']);
+
+//});

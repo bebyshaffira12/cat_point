@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+ Route::get('/',[HotelController::class,'index']);
+ Route::get('/admin',[AdminController::class,'index']);
+ Route::get('/jenispaket',[AdminController::class,'jenispaket']);
+ Route::get('/pesanan',[AdminController::class,'pesanan']);
+ Route::get('/invoice',[AdminController::class,'invoice']);
+ Route::get('/testimoni',[AdminController::class,'testimoni']);
