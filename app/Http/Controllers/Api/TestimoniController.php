@@ -16,9 +16,7 @@ class TestimoniController extends Controller
      */
     public function index()
     {
-        $data = Testimoni::select('testimoni.*', 'nama')
-            ->join('deskripsi', 'deskripsi.id', '=', 'testimoni.deskripsi')
-            ->get();
+        $data = Testimoni::all();
         return $this->createResponse(
             true,
             'success',
