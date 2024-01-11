@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\ReqStoreService;
 use App\Http\Requests\ReqUpdateService;
 use App\Models\Service;
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
 
 class ServiceController extends Controller
 {
