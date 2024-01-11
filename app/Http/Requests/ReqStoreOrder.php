@@ -29,7 +29,7 @@ class ReqStoreOrder extends FormRequest
     {
         return [
             "total_harga"          => "bail|required|numeric",
-            "booking_id"           => "bail|required|numeric",
+            "booking_id"           => "bail|required|numeric|exists:booking,id",
         ];
     }
 

@@ -30,8 +30,8 @@ class ReqStoreInvoice extends FormRequest
     {
         return [
             "status_pembayaran"          => "bail|required",
-            "booking_id"                 => "bail|required|numeric",
-            "order_id"                   => "bail|required|numeric",
+            "booking_id"                 => "bail|required|numeric|exists:booking,id",
+            "order_id"                   => "bail|required|numeric|exists:order,id",
         ];
     }
 
