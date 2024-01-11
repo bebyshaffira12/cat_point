@@ -31,7 +31,7 @@ class ReqStoreService extends FormRequest
             "paket_fluffy"          => "bail|required",
             "harga"                 => "bail|required|numeric",
             "deskripsi"             => "bail|required",
-            "gambar"                => "bail|required",
+            "gambar"                => "bail|required|mimes:jpeg,png,jpg,gif|max:4096",
         ];
     }
 

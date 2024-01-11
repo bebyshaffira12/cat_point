@@ -31,7 +31,7 @@ class ReqUpdateTreatment extends FormRequest
             "paket"          => "nullable",
             "harga"          => "nullable|numeric",
             "deskripsi"      => "nullable",
-            "gambar"         => "nullable",
+            "gambar"         => "nullable|mimes:jpeg,png,jpg,gif|max:4096",
         ];
     }
 

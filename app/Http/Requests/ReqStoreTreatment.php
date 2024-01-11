@@ -28,10 +28,10 @@ class ReqStoreTreatment extends FormRequest
     public function rules()
     {
         return [
-            "paket"          => "bail|required|",
+            "paket"          => "bail|required",
             "harga"          => "bail|required|numeric",
-            "deskripsi"      => "bail|required|",
-            "gambar"         => "bail|required|",
+            "deskripsi"      => "bail|required",
+            "gambar"         => "bail|required|mimes:jpeg,png,jpg,gif|max:4096",
         ];
     }
 

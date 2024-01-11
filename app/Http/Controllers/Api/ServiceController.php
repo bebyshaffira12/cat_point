@@ -6,6 +6,8 @@ use App\Http\Requests\ReqStoreService;
 use App\Http\Requests\ReqUpdateService;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
@@ -32,7 +34,20 @@ class ServiceController extends Controller
      */
     public function store(ReqStoreService $request)
     {
-        $result = Service::create($request->all());
+        $gambar = $request->file('gambar');
+        $fileLocation = null;
+
+        if (!empty($gambar)) {
+            $filename = md5($gambar . microtime()) . '_' . Str::random(30) . '.' . $gambar->extension();
+            $fileLocation = $gambar->storeAs('uploads', $filename, 'uploads');
+        }
+
+        $result = Service::create([
+            'paket_fluffy'      => $request->get('paket_fluffy'),
+            'harga'             => $request->get('harga'),
+            'deskripsi'         => $request->get('deskripsi'),
+            'gambar'            => $fileLocation ? '/storage'. $fileLocation : null,
+        ]);
 
         if ($result) {
             return $this->createResponse(
@@ -82,8 +97,37 @@ class ServiceController extends Controller
      */
     public function update(ReqUpdateService $request, Service $service)
     {
-        $result = $service->update($request->all());
+        $gambar = $request->file('gambar');
+        $fileLocation = null;
 
+        if (!empty($gambar)) {
+            $filename = md5($gambar . microtime()) . '_' . Str::random(30) . '.' . $gambar->extension();
+            $fileLocation = $gambar->storeAs('uploads', $filename, 'uploads');
+        }
+
+        if ($fileLocation) {
+            if ($service->gambar) {
+                $storage = Storage::disk('uploads');
+                $picture = str_replace('storage/', '', $service->gambar);
+                if ($storage->exists($picture)) {
+                    $storage->delete($picture);
+                }
+            }
+
+            $result = $service->update([
+                'paket_fluffy'      => $request->get('paket_fluffy'),
+                'harga'             => $request->get('harga'),
+                'deskripsi'         => $request->get('deskripsi'),
+                'gambar'            => 'storage/' . $fileLocation,
+            ]);
+        } else {
+            $result = $service->update([
+                'paket_fluffy'      => $request->get('paket_fluffy'),
+                'harga'             => $request->get('harga'),
+                'deskripsi'         => $request->get('deskripsi'),
+            ]);
+        }
+        
         if ($result) {
             return $this->createResponse(
                 true,
@@ -109,6 +153,14 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        if ($service->gambar) {
+            $storage = Storage::disk('uploads');
+            $picture = str_replace('storage/', '', $service->gambar);
+            if ($storage->exists($picture)) {
+                $storage->delete($picture);
+            }
+        }
+
         $result = $service->delete();
 
         if ($result) {
