@@ -39,8 +39,8 @@ class ReqUpdateBooking extends FormRequest
             "check_out"             => "nullable|date_format:Y-m-d H:i:s",
             "berat"                 => "nullable",
             "jenis_kelamin_kucing"  => "nullable",
-            "treatment_id"          => "nullable|numeric",
-            "service_id"            => "nullable|numeric",
+            "treatment_id"          => "nullable|numeric|exists:treatment,id",
+            "service_id"            => "nullable|numeric|exists:service,id",
         ];
     }
 

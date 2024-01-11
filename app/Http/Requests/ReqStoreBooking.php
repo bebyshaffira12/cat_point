@@ -39,8 +39,8 @@ class ReqStoreBooking extends FormRequest
             "check_out"             => "bail|required|date_format:Y-m-d H:i:s",
             "berat"                 => "bail|required",
             "jenis_kelamin_kucing"  => "bail|required",
-            "treatment_id"          => "bail|required|numeric",
-            "service_id"            => "bail|required|numeric",
+            "treatment_id"          => "bail|required|numeric|exists:treatment,id",
+            "service_id"            => "bail|required|numeric|exists:service,id",
         ];
     }
 

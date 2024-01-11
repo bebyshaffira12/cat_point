@@ -30,8 +30,8 @@ class ReqUpdateInvoice extends FormRequest
     {
         return [
             "status_pembayaran"          => "nullable",
-            "booking_id"                 => "nullable|numeric",
-            "order_id"                   => "nullable|numeric",
+            "booking_id"                 => "nullable|numeric|exists:booking,id",
+            "order_id"                   => "nullable|numeric|exists:order,id",
         ];
     }
 

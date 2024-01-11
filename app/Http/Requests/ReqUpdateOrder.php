@@ -29,7 +29,7 @@ class ReqUpdateOrder extends FormRequest
     {
         return [
             "total_harga"             => "nullable|numeric",
-            "booking_id"              => "nullable|numeric",
+            "booking_id"              => "nullable|numeric|exists:booking,id",
         ];
     }
 
