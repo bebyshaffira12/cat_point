@@ -18,6 +18,4 @@ class Testimoni extends Model
         'nama',
         'deskripsi',
     ];
-
-    
 }

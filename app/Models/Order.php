@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $table='order';
+    protected $table = 'order';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -17,8 +18,5 @@ class Order extends Model
     protected $fillable = [
         'total_harga',
         'booking_id',
-        
     ];
-
-    
 }

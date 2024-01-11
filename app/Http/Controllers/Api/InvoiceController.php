@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReqStoreInvoice;
+use App\Http\Requests\ReqUpdateInvoice;
 use App\Models\Invoice;
-use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
@@ -15,11 +16,16 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $data = Invoice::select('booking.*','status_pembayaran')
+        $data = Invoice::select('invoice.id as invoice_id', 'booking.*', 'status_pembayaran')
             ->join('order', 'order.id', '=', 'invoice.order_id')
             ->join('booking', 'booking.id', '=', 'invoice.booking_id')
             ->get();
-    return response()->json($data, 200);
+        return $this->createResponse(
+            true,
+            'success',
+            $data->makeHidden(['id']),
+            200
+        );
     }
 
     /**
@@ -38,17 +44,25 @@ class InvoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReqStoreInvoice $request)
     {
-        $status_pembayaran =$request->get('status_pembayaran'); 
-        $booking_id =$request->get('booking_id');
-        $order_id =$request->get('order_id');
-        Invoice::create([
-        'status_pembayaran'=>$status_pembayaran,
-        'booking_id'=>$booking_id,
-        'order_id'=>$order_id,
-        ]);
-        return response()->json(['sukses create data'], 200);
+        $result = Invoice::create($request->all());
+
+        if ($result) {
+            $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'error',
+            null,
+            500
+        );
     }
 
     /**
@@ -80,17 +94,25 @@ class InvoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(ReqUpdateInvoice $request, Invoice $invoice)
     {
-        $status_pembayaran =$request->get('status_pembayaran'); 
-        $booking_id =$request->get('booking_id');
-        $order_id =$request->get('order_id');
-        $invoice->update([
-        'status_pembayaran'=>$status_pembayaran,
-        'booking_id'=>$booking_id,
-        'order_id'=>$order_id,
-        ]);
-        return response()->json(['sukses update data'], 200);
+        $result = $invoice->update($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -101,7 +123,22 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        $invoice->delete();
-        return response()->json(['sukses delete data'], 200);
+        $result = $invoice->delete();
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 }

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\ReqStoreTreatment;
+use App\Http\Requests\ReqUpdateTreatment;
+use App\Models\Treatment;
 
-class UserController extends Controller
+class TreatmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = User::all();
+        $data = Treatment::all();
         return $this->createResponse(
             true,
             'success',
@@ -40,9 +41,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReqStoreTreatment $request)
     {
-        $result = User::create($request->all());
+        $result = Treatment::create($request->all());
 
         if ($result) {
             return $this->createResponse(
@@ -90,9 +91,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(ReqUpdateTreatment $request, Treatment $treatment)
     {
-        $result = $user->update($request->all());
+        $result = $treatment->update($request->all());
 
         if ($result) {
             return $this->createResponse(
@@ -117,9 +118,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Treatment $treatment)
     {
-        $result = $user->delete();
+        $result = $treatment->delete();
 
         if ($result) {
             return $this->createResponse(

@@ -27,14 +27,14 @@ return new class extends Migration
             $table->string('berat');
             $table->string('jenis_kelamin_kucing');
             $table->unsignedBigInteger('treatment_id')->nullable();
-            $table->unsignedBigInteger('hotel_id')->nullable();
+            $table->unsignedBigInteger('service_id')->nullable();
             $table->foreign('treatment_id')
                 ->references('id')
                 ->on('treatment')
                 ->nullOnDelete();
-            $table->foreign('hotel_id')
+            $table->foreign('service_id')
                 ->references('id')
-                ->on('hotel')
+                ->on('service')
                 ->nullOnDelete();
             $table->timestamps();
         });

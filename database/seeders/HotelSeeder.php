@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\Hotel;
+use App\Models\Service;
 use Illuminate\Database\Seeder;
 
 class HotelSeeder extends Seeder
@@ -45,7 +43,7 @@ class HotelSeeder extends Seeder
 
 
         foreach ($hotels as $hotel) {
-            Hotel::create($hotel);
+            Service::create($hotel);
         }
     }
 }

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     use HasFactory;
-    protected $table='booking';
+    protected $table = 'booking';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -27,9 +28,6 @@ class Booking extends Model
         'berat',
         'jenis_kelamin_kucing',
         'treatment_id',
-        'hotel_id',
-        
+        'service_id',
     ];
-
-    
 }

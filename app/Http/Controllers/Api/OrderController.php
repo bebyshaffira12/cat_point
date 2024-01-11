@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReqStoreOrder;
+use App\Http\Requests\ReqUpdateOrder;
 use App\Models\Order;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -15,9 +16,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $data = Order::select('booking.*','total_harga')
-            ->join('booking', 'booking.id', '=', 'order.booking_id')->get();
-    return response()->json($data, 200);
+        $data = Order::select('order.id as order_id', 'booking.id as booking_id', 'booking.*','total_harga')
+            ->join('booking', 'booking.id', '=', 'order.booking_id')
+            ->get();
+        
+        return $this->createResponse(
+            true,
+            'success',
+            $data->makeHidden(['id']),
+            200
+        );
     }
 
     /**
@@ -36,15 +44,25 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReqStoreOrder $request)
     {
-        $booking_id =$request->get('booking_id'); 
-        $total_harga =$request->get('total_harga');
-        Order::create([
-        'booking_id'=>$booking_id,
-        'total_harga'=>$total_harga,
-        ]);
-        return response()->json(['sukses create data'], 200);
+        $result = Order::create($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -76,15 +94,25 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(ReqUpdateOrder $request, Order $order)
     {
-        $booking_id =$request->get('booking_id'); 
-        $total_harga =$request->get('total_harga');
-        $order->update([
-        'booking_id'=>$booking_id,
-        'total_harga'=>$total_harga,
-        ]);
-        return response()->json(['sukses update data'], 200);
+        $result = $order->update($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -95,7 +123,22 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $order->delete();
-        return response()->json(['sukses delete data'], 200);
+        $result = $order->delete();
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 }

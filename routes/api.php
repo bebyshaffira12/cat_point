@@ -6,9 +6,8 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\TestimoniController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\HotelController;
-use App\Models\Invoice;
-use App\Models\Treatment;
+use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\TreatmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +27,8 @@ use Illuminate\Support\Facades\Route;
     Route::resource('invoice', InvoiceController::class);
     Route::resource('testimoni', TestimoniController::class);
     Route::resource('user', UserController::class);
-    Route::resource('Hotel', HotelController::class);
-    Route::resource('Treatment', Treatment::class);
+    Route::resource('service', ServiceController::class);
+    Route::resource('treatment', TreatmentController::class);
     Route::post('book', [PaymentController::class, 'book']);
     Route::post('generateqr', [PaymentController::class, 'generateqr']);
 

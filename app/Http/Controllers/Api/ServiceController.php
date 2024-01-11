@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\ReqStoreService;
+use App\Http\Requests\ReqUpdateService;
+use App\Models\Service;
+use Illuminate\Routing\Controller;
 
-class UserController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = User::all();
+        $data = Service::all();
         return $this->createResponse(
             true,
             'success',
@@ -29,20 +30,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function store(ReqStoreService $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $result = User::create($request->all());
+        $result = Service::create($request->all());
 
         if ($result) {
             return $this->createResponse(
@@ -90,9 +80,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(ReqUpdateService $request, Service $service)
     {
-        $result = $user->update($request->all());
+        $result = $service->update($request->all());
 
         if ($result) {
             return $this->createResponse(
@@ -117,9 +107,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Service $service)
     {
-        $result = $user->delete();
+        $result = $service->delete();
 
         if ($result) {
             return $this->createResponse(

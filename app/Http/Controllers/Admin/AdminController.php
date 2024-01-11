@@ -4,24 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as RoutingController;
 
-class AdminController extends RoutingController
+class AdminController extends Controller
 {
    function index() {
-    return view('
-    admin.konten.dashboard');
+      return view('welcome');
    }
+
    function jenispaket() {
-    return view('admin.konten.jenispaket');
+      return view('admin.konten.jenispaket');
    }
+
    function pesanan() {
-    return view('admin.konten.pesanan');
+      return view('admin.konten.pesanan');
    }
+
    function invoice() {
-    return view('admin.konten.invoice');
+      return view('admin.konten.invoice');
    }
+
    function testimoni() {
-    return view('admin.konten.testimoni');
+      return view('admin.konten.testimoni');
    }
 }

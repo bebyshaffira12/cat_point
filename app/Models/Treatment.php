@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Treatment extends Model
 {
     use HasFactory;
-    protected $table='treatment';
+    protected $table = 'treatment';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +21,4 @@ class Treatment extends Model
         'deskripsi',
         'gambar',
     ];
-
-    
 }

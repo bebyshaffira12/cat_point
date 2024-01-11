@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReqStoreBooking;
+use App\Http\Requests\ReqUpdateBooking;
 use App\Models\Booking;
-use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,12 @@ class BookingController extends Controller
     public function index()
     {
         $data = Booking::all();
-    return response()->json($data, 200);
+        return $this->createResponse(
+            true,
+            'success',
+            $data,
+            200
+        );
     }
 
     /**
@@ -35,37 +42,25 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReqStoreBooking $request)
     {
-        $nama_pemilik =$request->get('nama_pemilik'); 
-        $no_telfon =$request->get('no_telfon');
-        $alamat =$request->get('alamat');
-        $nama_hewan =$request->get('nama_hewan');
-        $ciri_khusus_hewan =$request->get('ciri_khusus_hewan');
-        $umur_kucing =$request->get('umur_kucing');
-        $jenis_kucing =$request->get('jenis_kucing');
-        $check_in =$request->get('check_in');
-        $check_out =$request->get('check_out');
-        $berat =$request->get('berat');
-        $jenis_kelamin_kucing =$request->get('jenis_kelamin_kucing');
-        $treatment_id =$request->get('treatment_id');
-        $hotel_id =$request->get('hotel_id');
-        Booking::create([
-        'nama_pemilik'=>$nama_pemilik,
-        'no_telfon'=>$no_telfon,
-        'alamat'=>$alamat,
-        'nama_hewan'=>$nama_hewan,
-        'ciri_khusus_hewan'=>$ciri_khusus_hewan,
-        'umur_kucing'=>$umur_kucing,
-        'jenis_kucing'=>$jenis_kucing,
-        'check_in'=>$check_in,
-        'check_out'=>$check_out,
-        'berat'=>$berat,
-        'jenis_kelamin_kucing'=>$jenis_kelamin_kucing,
-        'treatment_id'=>$treatment_id,
-        'hotel_id'=>$hotel_id,
-        ]);
-        return response()->json(['sukses create data'], 200);
+        $result = Booking::create($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -97,37 +92,25 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(ReqUpdateBooking $request, Booking $booking)
     {
-        $nama_pemilik =$request->get('nama_pemilik'); 
-        $no_telfon =$request->get('no_telfon');
-        $alamat =$request->get('alamat');
-        $nama_hewan =$request->get('nama_hewan');
-        $ciri_khusus_hewan =$request->get('ciri_khusus_hewan');
-        $umur_kucing =$request->get('umur_kucing');
-        $jenis_kucing =$request->get('jenis_kucing');
-        $check_in =$request->get('check_in');
-        $check_out =$request->get('check_out');
-        $berat =$request->get('berat');
-        $jenis_kelamin_kucing =$request->get('jenis_kelamin_kucing');
-        $treatment_id =$request->get('treatment_id');
-        $hotel_id =$request->get('hotel_id');
-        $booking->update([
-        'nama_pemilik'=>$nama_pemilik,
-        'no_telfon'=>$no_telfon,
-        'alamat'=>$alamat,
-        'nama_hewan'=>$nama_hewan,
-        'ciri_khusus_hewan'=>$ciri_khusus_hewan,
-        'umur_kucing'=>$umur_kucing,
-        'jenis_kucing'=>$jenis_kucing,
-        'check_in'=>$check_in,
-        'check_out'=>$check_out,
-        'berat'=>$berat,
-        'jenis_kelamin_kucing'=>$jenis_kelamin_kucing,
-        'treatment_id'=>$treatment_id,
-        'hotel_id'=>$hotel_id,
-        ]);
-        return response()->json(['sukses update data'], 200);
+        $result = $booking->update($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -138,7 +121,22 @@ class BookingController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        $booking->delete();
-        return response()->json(['sukses delete data'], 200);
+        $result = $booking->delete();
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 }

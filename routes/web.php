@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- Route::get('/',[HotelController::class,'index']);
+ Route::get('/',[AdminController::class,'index']);
  Route::get('/admin',[AdminController::class,'index']);
  Route::get('/jenispaket',[AdminController::class,'jenispaket']);
  Route::get('/pesanan',[AdminController::class,'pesanan']);

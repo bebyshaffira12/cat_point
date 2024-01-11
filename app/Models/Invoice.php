@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasFactory;
+    protected $table = 'invoice';
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +19,5 @@ class Invoice extends Model
         'status_pembayaran',
         'booking_id',
         'order_id',
-        
     ];
-
-    
 }

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ReqStoreTestimoni;
+use App\Http\Requests\ReqUpdateTestimoni;
 use App\Models\Testimoni;
-use Illuminate\Http\Request;
 
 class TestimoniController extends Controller
 {
@@ -15,9 +16,15 @@ class TestimoniController extends Controller
      */
     public function index()
     {
-        $data = Testimoni::select('testimoni.*','nama')
-            ->join('deskripsi', 'deskripsi.id', '=', 'testimoni.deskripsi')->get();
-    return response()->json($data, 200);
+        $data = Testimoni::select('testimoni.*', 'nama')
+            ->join('deskripsi', 'deskripsi.id', '=', 'testimoni.deskripsi')
+            ->get();
+        return $this->createResponse(
+            true,
+            'success',
+            $data,
+            200
+        );
     }
 
     /**
@@ -36,15 +43,25 @@ class TestimoniController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReqStoreTestimoni $request)
     {
-        $nama =$request->get('nama'); 
-        $deskripsi =$request->get('deskripsi');
-        Testimoni::create([
-        'nama'=>$nama,
-        'deskripsi'=>$deskripsi,
-        ]);
-        return response()->json(['sukses create data'], 200);
+        $result = Testimoni::create($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -76,15 +93,25 @@ class TestimoniController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Testimoni $testimoni)
+    public function update(ReqUpdateTestimoni $request, Testimoni $testimoni)
     {
-        $nama =$request->get('nama'); 
-        $deskripsi =$request->get('deskripsi');
-        $testimoni->update([
-        'nama'=>$nama,
-        'deskripsi'=>$deskripsi,
-        ]);
-        return response()->json(['sukses update data'], 200);
+        $result = $testimoni->update($request->all());
+
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 
     /**
@@ -95,7 +122,22 @@ class TestimoniController extends Controller
      */
     public function destroy(Testimoni $testimoni)
     {
-        $testimoni->delete();
-        return response()->json(['sukses delete data'], 200);
+        $result = $testimoni->delete();
+        
+        if ($result) {
+            return $this->createResponse(
+                true,
+                'success',
+                $result,
+                200
+            );
+        }
+
+        return $this->createResponse(
+            false,
+            'failed',
+            null,
+            500
+        );
     }
 }
