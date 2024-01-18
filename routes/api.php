@@ -35,8 +35,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('treatment', TreatmentController::class);
     Route::post('book', [PaymentController::class, 'book']);
     Route::post('generateqr', [PaymentController::class, 'generateqr']);
-
+    Route::post('checkstatus', [PaymentController::class, 'checkstatus']);
 
     Route::post('/logout', [App\Http\Controllers\Api\LoginController::class, 'logout']);
-
 });

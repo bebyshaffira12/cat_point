@@ -16,14 +16,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $data = Order::select('order.id as order_id', 'booking.id as booking_id', 'booking.*','total_harga')
-            ->join('booking', 'booking.id', '=', 'order.booking_id')
-            ->get();
+        $data = Order::with(['booking' => ['treatment', 'service']])->get();
         
         return $this->createResponse(
             true,
             'success',
-            $data->makeHidden(['id']),
+            $data,
             200
         );
     }

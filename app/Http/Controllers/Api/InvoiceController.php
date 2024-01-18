@@ -16,9 +16,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $data = Invoice::select('invoice.id as invoice_id', 'booking.*', 'status_pembayaran')
-            ->join('order', 'order.id', '=', 'invoice.order_id')
-            ->join('booking', 'booking.id', '=', 'invoice.booking_id')
+        $data = Invoice::with(['booking' => ['treatment', 'service']])
             ->get();
         return $this->createResponse(
             true,

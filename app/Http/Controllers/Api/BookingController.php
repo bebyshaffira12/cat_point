@@ -17,7 +17,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $data = Booking::all();
+        $data = Booking::with(['treatment', 'service'])->get();
         return $this->createResponse(
             true,
             'success',
