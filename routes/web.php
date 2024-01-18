@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
- Route::get('/',[AdminController::class,'index']);
- Route::get('/admin',[AdminController::class,'index']);
- Route::get('/jenispaket',[AdminController::class,'jenispaket']);
- Route::get('/pesanan',[AdminController::class,'pesanan']);
- Route::get('/invoice',[AdminController::class,'invoice']);
- Route::get('/testimoni',[AdminController::class,'testimoni']);
+ Route::get('/',function () {
+    return view('welcome');
+  }
+);

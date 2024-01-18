@@ -20,8 +20,12 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+//route login
+Route::post('/login', [App\Http\Controllers\Api\LoginController::class, 'index']);
+// Route for registration
+Route::post('/register', [App\Http\Controllers\Api\RegisterController::class, 'register']);
 
-//Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::resource('order', OrderController::class);
     Route::resource('booking', BookingController::class);
     Route::resource('invoice', InvoiceController::class);
@@ -32,4 +36,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('book', [PaymentController::class, 'book']);
     Route::post('generateqr', [PaymentController::class, 'generateqr']);
 
-//});
+
+    Route::post('/logout', [App\Http\Controllers\Api\LoginController::class, 'logout']);
+
+});

@@ -41,9 +41,9 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'passport',
+            'driver' => 'jwt',      // <-- set ke "jwt"
             'provider' => 'users',
-            'hash' => true,
+            'hash' => false,
         ],
     ],
 
